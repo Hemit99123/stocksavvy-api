@@ -5,7 +5,7 @@
 ## 💻 Technologies Used:
 
 ### Drizzle ORM
-Drizzle serves as both an ORM and a query builder, providing a mid-level abstraction from SQL code for improved performance. Developers are expected to have SQL knowledge, which is considered a fair trade-off by the StockSavvy development team. For more information, check out this [YouTube Video](https://www.youtube.com/watch?v=b8W4bupOmxw).
+Drizzle serves as both an ORM and a query builder, providing a mid-level abstraction from SQL code for improved performance. Developers are expected to have SQL knowledge, which is considered a fair trade-off by the developer, Hemit Patel
 
 ### NodeJS with TSC
 NodeJS is a runtime environment for JavaScript, enabling server-side execution of JavaScript code. This allows for a unified programming language across the web app and API, enhancing developer experience. Its asynchronous features and promise-based structure add to its appeal. TSC is the TypeScript compiler for NodeJS, as TypeScript is not natively supported.
