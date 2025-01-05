@@ -21,7 +21,7 @@ Swagger is used for seamless API documentation.
 
 ## 🧱 API Architecture:
 
-The API logic is structured into three main folders:
+The API logic is structured into three main folders. It is modelled after the MVC architure. The "models" are taken care of by the `/drizzle` folder.
 
 - #### Controllers
 Contains all business logic, including database queries for API endpoints.
