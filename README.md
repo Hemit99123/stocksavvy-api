@@ -19,8 +19,8 @@ This technology abstracts session-based authentication logic from developers, le
 ### - Swagger
 Swagger is used for seamless API documentation.
 
-### - Husky + ESLint + Prettier
-These are dev tools that make the code mainable and production ready. The ESLint is a linting software to ensures code follows a strict set of rules that were designed for longetivity and productive readiness. Prettier formats the code so it is easier to read by other developers within your team, it does it automatically! Husky is a pre-commit tool that allows commands to run before code is committed to Github. I have set it up so that both **ESLint** and **Prettier** are configured to run with Husky everytime before a commit to this Github remote repo is made!
+### - Husky + ESLint
+These are dev tools that make the code mainable and production ready. The ESLint is a linting software to ensures code follows a strict set of rules that were designed for longetivity and productive readiness. I have set it up so that both **ESLint** are configured to run with Husky everytime before a commit to this Github remote repo is made!
 
 ## 🧱 API Architecture:
 
