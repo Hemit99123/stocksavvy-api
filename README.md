@@ -5,7 +5,7 @@
 ## 💻 Technologies Used:
 
 ### Drizzle ORM
-Drizzle serves as both an ORM and a query builder, providing a mid-level abstraction from SQL code for improved performance. Developers are expected to have SQL knowledge, which is considered a fair trade-off by the StockSavvy development team. For more information, check out this [YouTube Video](https://www.youtube.com/watch?v=b8W4bupOmxw).
+Drizzle serves as both an ORM and a query builder, providing a mid-level abstraction from SQL code for improved performance. Developers are expected to have SQL knowledge, which is considered a fair trade-off by the developer, Hemit Patel
 
 ### NodeJS with TSC
 NodeJS is a runtime environment for JavaScript, enabling server-side execution of JavaScript code. This allows for a unified programming language across the web app and API, enhancing developer experience. Its asynchronous features and promise-based structure add to its appeal. TSC is the TypeScript compiler for NodeJS, as TypeScript is not natively supported.
@@ -21,7 +21,7 @@ Swagger is used for seamless API documentation.
 
 ## 🧱 API Architecture:
 
-The API logic is structured into three main folders:
+The API logic is structured into three main folders. It is modelled after the MVC architure. The "models" are taken care of by the `/drizzle` folder.
 
 - #### Controllers
 Contains all business logic, including database queries for API endpoints.
@@ -35,5 +35,3 @@ Houses code that runs before any other logic in an endpoint, useful for pre-proc
 ## 📝 Endpoint Docs:
 
 To explore the different endpoints and their intended use cases, please navigate to the route `/api-docs` from the api endpoint.
-
-[Database ER Diagram](https://drive.google.com/file/d/1Y9Yu9_crEV4aN3SZ9a_vSYKdIGGY7dxm/preview)
