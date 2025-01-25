@@ -38,3 +38,24 @@ Houses code that runs before any other logic in an endpoint, useful for pre-proc
 ## 📝 Endpoint Docs:
 
 To explore the different endpoints and their intended use cases, please navigate to the route `/api-docs` from the api endpoint.
+
+## Contributions?
+
+Contributions are allowed! We ask that you follow certain rules whilst making contributions. All work that you do will be **voluntary** and not privy to payment. However, you can use **your** contributions as work experience for any future work you might apply for. This can only be done if you follow our rules as listed below...
+
+#### The rules:
+
+When making contributions to this codebase, start by creating a issue. The naming of the issue should start off with:
+
+- feat: (for a new feature)
+- fix: (for a fix to a bug/feature not working)
+- chore: (for any other task that does not fit the other 2 categories)
+
+Once the issue is made, be sure to comment on that issue for all progress made. 
+
+Now, we can create a branch for your work. **DO NOT COMMIT ON MAIN** 
+The branch should have the following naming structure: `YOUR NAME/GITHUB USER/1-2 WORDS ON THE CONTRIBUTION MADE` Examples of such naming structure include `hemit99123/about-page`
+
+Ok now create a PR with the **same name as the issue** and once you are done with your contribution, simply merge the PR and close the issue :)
+
+#### Happy Coding 🧑🏽‍💻
