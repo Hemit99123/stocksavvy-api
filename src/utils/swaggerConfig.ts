@@ -11,7 +11,7 @@ const options = {
     servers: [
       {
         url: "http://localhost:3001",
-      }
+      },
     ],
   },
   apis: ["./src/routes/*.ts"], // Path to the API docs
