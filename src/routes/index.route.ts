@@ -1,7 +1,7 @@
-import express from 'express'
-import indexController from '../controllers/index.controller.js'
-import { authenticateSession } from '../middleware/session.middleware.js'
-const router = express.Router()
+import express from "express";
+import indexController from "../controllers/index.controller.js";
+import { authenticateSession } from "../middleware/session.middleware.js";
+const router = express.Router();
 
 /**
  * @swagger
@@ -30,8 +30,6 @@ const router = express.Router()
  *                   example: Let's change the world 🚀
  */
 
- 
+router.get("/", authenticateSession, indexController.get);
 
-router.get("/", authenticateSession, indexController.get)
-
-export default router
+export default router;

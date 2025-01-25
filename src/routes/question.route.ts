@@ -1,6 +1,6 @@
-import express from 'express'
-import questionController from '../controllers/question.controller.js'
-const router = express.Router()
+import express from "express";
+import questionController from "../controllers/question.controller.js";
+const router = express.Router();
 
 /**
  * @swagger
@@ -29,7 +29,7 @@ const router = express.Router()
  *                   example: Let's change the world 🚀
  */
 
- /**
+/**
  * @swagger
  * /questions/editorial/reading:
  *   get:
@@ -56,8 +56,7 @@ const router = express.Router()
  *                   example: Let's change the world 🚀
  */
 
+router.get("/get/reading", questionController.getReadingQuestions);
+router.get("/editorial/reading", questionController.getEditorialReading);
 
-router.get("/get/reading", questionController.getReadingQuestions)
-router.get("/editorial/reading", questionController.getEditorialReading)
-
-export default router
+export default router;

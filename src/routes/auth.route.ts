@@ -1,9 +1,7 @@
-import express from 'express';
-import authController from '../controllers/auth.controller.js';
+import express from "express";
+import authController from "../controllers/auth.controller.js";
 
 const router = express.Router();
-
-
 
 /**
  * @swagger
@@ -83,7 +81,6 @@ const router = express.Router();
  *                    example: no-session-id
  */
 
-
 /**
  * @swagger
  *  /auth/delete:
@@ -127,7 +124,6 @@ const router = express.Router();
  *                    example: no-auth-access
  */
 
-
 /**
  * @swagger
  *  /auth/check-session:
@@ -151,9 +147,9 @@ const router = express.Router();
  *          description: User is NOT authenticated
  */
 
-router.get('/login', authController.login)
-router.post('/logout', authController.logOut);
-router.get('/check-session', authController.checkSession)
-router.get('/error', authController.error)
+router.get("/login", authController.login);
+router.post("/logout", authController.logOut);
+router.get("/check-session", authController.checkSession);
+router.get("/error", authController.error);
 
 export default router;
