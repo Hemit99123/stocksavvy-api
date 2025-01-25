@@ -1,11 +1,4 @@
-import {
-  serial,
-  text,
-  timestamp,
-  pgTable,
-  integer,
-  index,
-} from "drizzle-orm/pg-core";
+import { serial, text, pgTable, integer, index } from "drizzle-orm/pg-core";
 
 // user table schema remains the same
 export const user = pgTable("user", {

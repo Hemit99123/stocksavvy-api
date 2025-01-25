@@ -4,7 +4,7 @@ import { user } from "../schema.js";
 import { eq } from "drizzle-orm";
 import handleError from "../libs/handleError.js";
 import dotenv from "dotenv";
-import axios from "axios";
+import axios, { AxiosError } from "axios";
 
 dotenv.config();
 
@@ -20,8 +20,6 @@ const authController = {
     }
 
     try {
-      // getting the response from googleapis based on the token given
-      // using axios to make the api request calls
       const response = await axios.get(
         `https://www.googleapis.com/oauth2/v1/userinfo`,
         {
@@ -36,7 +34,6 @@ const authController = {
         .where(eq(user.email, userEmail))
         .execute();
 
-      // If user does not exist, add them to the database
       if (!userObj[0]) {
         await db.insert(user).values({
           email: userEmail,
@@ -45,7 +42,6 @@ const authController = {
         });
       }
 
-      // Build a new session as the user has been verified by Google
       req.session.user = { email: userEmail };
 
       return res.json({
@@ -56,15 +52,24 @@ const authController = {
           googleid: response.data.id,
         },
       });
-    } catch (error: any) {
-      // we check for 401 because that means an invalid token so we give a specialized error response and not generic
-      if (error.status == 401) {
-        return res.status(500).json({
-          message: "Invalid Google token (not authenticated 401)",
-          error: "invalid-token",
-        });
-      } else {
+    } catch (error: unknown) {
+      if (error instanceof AxiosError) {
+        // Handling axios-specific error
+        if (error.response?.status === 401) {
+          return res.status(500).json({
+            message: "Invalid Google token (not authenticated 401)",
+            error: "invalid-token",
+          });
+        } else {
+          handleError(res, error);
+        }
+      } else if (error instanceof Error) {
         handleError(res, error);
+      } else {
+        res.status(500).json({
+          message: "An unknown error occurred.",
+          error: "unknown-error",
+        });
       }
     }
   },
@@ -87,32 +92,44 @@ const authController = {
           error: "not-authenticated",
         });
       }
-    } catch (error: any) {
-      handleError(res, error);
+    } catch (error: unknown) {
+      if (error instanceof Error) {
+        handleError(res, error);
+      } else {
+        res.status(500).json({
+          message: "An unexpected error occurred",
+          error: "unknown-error",
+        });
+      }
     }
   },
 
   deleteUser: async (req: Request, res: Response) => {
-    // using the email from the session so that user can only delete account they are signed into
     const { email } = req.session.user ?? {};
 
     try {
       await db
         .delete(user)
         .where(eq(user.email, email as string))
-        .execute(); // Execute the deletion
+        .execute();
 
       res.status(200).json({
         message: "User deleted successfully",
       });
-    } catch (error) {
-      handleError(res, error);
+    } catch (error: unknown) {
+      if (error instanceof Error) {
+        handleError(res, error);
+      } else {
+        res.status(500).json({
+          message: "An unexpected error occurred",
+          error: "unknown-error",
+        });
+      }
     }
   },
 
   checkSession: async (req: Request, res: Response) => {
     try {
-      // Checking if a session which contains user data exists
       if (req.session) {
         return res.status(200).json({
           success: true,
@@ -124,16 +141,24 @@ const authController = {
           session: "none",
         });
       }
-    } catch (error) {
-      handleError(res, error);
+    } catch (error: unknown) {
+      if (error instanceof Error) {
+        handleError(res, error);
+      } else {
+        res.status(500).json({
+          message: "An unexpected error occurred",
+          error: "unknown-error",
+        });
+      }
     }
   },
+
   error: async (req: Request, res: Response) => {
     const { error } = req.query;
 
     res.json({
       message:
-        "An error has occured! Please contact DailySAT executive team to get this sorted right away!",
+        "An error has occurred! Please contact DailySAT executive team to get this sorted right away!",
       error: error,
     });
   },

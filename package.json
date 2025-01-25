@@ -10,7 +10,8 @@
     "generate": "drizzle-kit generate",
     "migrate": "drizzle-kit migrate",
     "prepare": "husky install",
-    "format": "prettier --ignore-path .gitignore --write \"**/*.{ts,tsx,css,scss}\""
+    "format": "prettier --ignore-path .gitignore --write \"**/*.{ts,tsx,css,scss}\"",
+    "lint": "eslint . --fix"
   },
   "keywords": [],
   "author": "Hemit Patel",
@@ -34,6 +35,7 @@
     "swagger-ui-express": "^5.0.1"
   },
   "devDependencies": {
+    "@eslint/js": "^9.19.0",
     "@types/bcrypt": "^5.0.2",
     "@types/cookie-parser": "^1.4.7",
     "@types/cors": "^2.8.17",
@@ -49,7 +51,13 @@
     "@types/pg": "^8.11.10",
     "@types/swagger-jsdoc": "^6.0.4",
     "@types/swagger-ui-express": "^4.1.6",
+    "@typescript-eslint/eslint-plugin": "^8.21.0",
+    "@typescript-eslint/parser": "^8.21.0",
+    "eslint": "^9.19.0",
+    "eslint-plugin-node": "^11.1.0",
+    "globals": "^15.14.0",
     "husky": "^8.0.0",
-    "typescript": "^5.5.4"
+    "typescript": "^5.7.3",
+    "typescript-eslint": "^8.21.0"
   }
 }
