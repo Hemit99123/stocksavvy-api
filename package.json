@@ -10,7 +10,6 @@
     "generate": "drizzle-kit generate",
     "migrate": "drizzle-kit migrate",
     "prepare": "husky install",
-    "format": "prettier --ignore-path .gitignore --write \"**/*.{ts,tsx,css,scss}\"",
     "lint": "eslint . --fix"
   },
   "keywords": [],
