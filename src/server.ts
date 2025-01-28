@@ -16,7 +16,6 @@ const app = express();
 // Routers
 import indexRoutes from "./routes/index.route.js";
 import authRoutes from "./routes/auth.route.js";
-import questionRoutes from "./routes/question.route.js";
 
 // JSON middleware
 app.use(express.json());
@@ -51,7 +50,6 @@ app.use(
 // Setup routing
 app.use("/", indexRoutes);
 app.use("/auth", authRoutes);
-app.use("/questions", questionRoutes);
 
 // Route for api docs from Swagger
 app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerSpecs));
