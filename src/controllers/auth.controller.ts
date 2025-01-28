@@ -1,5 +1,5 @@
 import { Request, Response } from "express";
-import { db } from "../utils/db.js";
+import { db } from "../libs/db.js";
 import { user } from "../schema.js";
 import { eq } from "drizzle-orm";
 import handleError from "../libs/handleError.js";
