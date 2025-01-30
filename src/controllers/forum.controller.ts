@@ -80,7 +80,7 @@ const forumController = {
                 questions
             })
 
-        } catch(error) {
+        } catch(error: unknown) {
             if (error instanceof Error) {
                 handleError(res, error);
             } else {
@@ -91,6 +91,31 @@ const forumController = {
             }
         }
     },
+
+    getAllUserQuestions: async (req: Request, res: Response) => {
+        const { email } = req.query
+
+        try {
+            const questions = await db
+                .select()
+                .from(forum)
+                .where(eq(forum.email, email as string))
+            
+            res.status(200).json({
+                questions,
+                message: "Got all questions for user"
+            })
+        } catch(error: unknown) {
+            if (error instanceof Error) {
+                handleError(res, error);
+            } else {
+                res.status(500).json({
+                    message: "An unexpected error occurred",
+                    error: "unknown-error",
+                });
+            }
+        }
+    }
 };
 
 export default forumController;

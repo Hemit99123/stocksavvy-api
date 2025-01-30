@@ -9,6 +9,6 @@ router.delete("/delete", authenticateSession, forumController.delete)
 
 // These routes are for guests too (no need to be authenticated)
 router.get("/all-questions", forumController.getAllQuestions)
-
+router.get("/user-questions", forumController.getAllUserQuestions)
 
 export default router;
