@@ -55,7 +55,7 @@ app.use("/auth", authRoutes);
 app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerSpecs));
 
 // Start server
-app.listen(PORT, () => {
+app.listen(PORT || process.env.PORT, () => {
   console.log(`Server running on port ${PORT}`);
 });
 
