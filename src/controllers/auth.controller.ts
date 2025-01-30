@@ -3,10 +3,7 @@ import { db } from "../utils/db.js";
 import { user } from "../schema.js";
 import { eq } from "drizzle-orm";
 import handleError from "../utils/handleError.js";
-import dotenv from "dotenv";
 import axios, { AxiosError } from "axios";
-
-dotenv.config();
 
 const authController = {
   login: async (req: Request, res: Response) => {
