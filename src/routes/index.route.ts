@@ -18,16 +18,16 @@ const router = express.Router();
  *               properties:
  *                 name:
  *                   type: string
- *                   example: DailySAT API
+ *                   example: StockSavvy Backend
  *                 author:
  *                   type: string
- *                   example: DailySAT Engineering Team
+ *                   example: Hemit Patel
  *                 date_created:
  *                   type: string
- *                   example: July 28 2024
+ *                   example: December 24 2024
  *                 message:
  *                   type: string
- *                   example: Let's change the world 🚀
+ *                   example:The backend that powers the StockSavvy educational platform
  */
 
 router.get("/", authenticateSession, indexController.get);
