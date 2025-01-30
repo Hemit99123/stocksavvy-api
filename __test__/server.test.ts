@@ -1,5 +1,5 @@
 import request from 'supertest';
-import app from '../server.js'; // Assuming the path to the app file is correct
+import app from '../src/server.ts'; // Assuming the path to the app file is correct
 
 describe("POST /auth/login", () => {
   describe("given an email and password", () => {
