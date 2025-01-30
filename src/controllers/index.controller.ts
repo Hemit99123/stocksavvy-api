@@ -6,7 +6,7 @@ const indexController = {
       name: "StockSavvy Backend",
       author: "Hemit Patel",
       date_created: "December 24 2024",
-      message: "Let's change the world 🚀",
+      message: "The backend that powers the StockSavvy educational platform",
     });
   },
 };
