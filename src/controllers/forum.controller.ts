@@ -6,8 +6,7 @@ import { and, eq } from "drizzle-orm";
 
 const forumController = {
     create: async (req: Request, res: Response) => {
-        const body = req.body;
-        const question = body.question;
+        const { question } = req.body;
         const email = req.session.user?.email;
 
         if (!question || !email) {
@@ -42,8 +41,7 @@ const forumController = {
     },
 
     delete: async (req: Request, res: Response) => {
-        const body = req.body;
-        const id = body.id;
+        const { id } = req.body;
         const email = req.session.user?.email;
 
         try {
