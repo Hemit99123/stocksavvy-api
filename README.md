@@ -26,7 +26,7 @@ A Github action that runs Jest testing which tests **all** helper functions that
 
 ## 🧱 API Architecture:
 
-The API logic is structured into three main folders. It is modelled after the MVC architure. The "models" are taken care of by the `/drizzle` folder.
+The API logic is structured into three main folders. It is modelled after the MVC architure. The "models" are taken care of by the `/drizzle` folder and the schema.ts file within `src`.
 
 - #### Controllers
 Contains all business logic, including database queries for API endpoints.
