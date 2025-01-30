@@ -1,13 +1,19 @@
 {
-    "compilerOptions": {
-      "module": "NodeNext",
-      "moduleResolution": "NodeNext",
-      "target": "ES2020",
-      "sourceMap": true,
-      "outDir": "dist",
-      "strict": true,
-      "esModuleInterop": true,
-      "skipLibCheck": true
-    },
-    "include": ["src/**/*", "drizzle.config.ts"],
+  "compilerOptions": {
+    "module": "NodeNext",
+    "moduleResolution": "NodeNext",
+    "target": "ES2020",
+    "sourceMap": true,
+    "outDir": "dist",
+    "strict": true,
+    "esModuleInterop": true,
+    "skipLibCheck": true,
+    "allowJs": true,            // Add this to allow JavaScript files
+    "resolveJsonModule": true,  // If you're importing JSON files
+    "checkJs": false            // To suppress JS file errors if you don't want strict checking
+  },
+  "include": [
+    "src/**/*",
+    "drizzle.config.ts"
+  ]
 }
