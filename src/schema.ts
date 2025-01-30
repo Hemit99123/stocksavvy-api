@@ -12,5 +12,4 @@ export const forum = pgTable("forum", {
     .references(() => user.email) // references the email in the user table (foreign key)
     .notNull(), 
   createdAt: date("createdAt")
-    .default('CURRENT_DATE') // Set the default value to current date
 });
