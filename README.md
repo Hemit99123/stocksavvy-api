@@ -1,7 +1,6 @@
 # 🚀 StockSavvy API
 
-**Overview:** The StockSavvy API powers the backend of the StockSavvy web platform, developed with ReactJS and TypeScript using the ViteJS buildpack.
-
+**Overview:** The StockSavvy API powers the backend of the StockSavvy web platform, developed with NextJS (purely frontend)
 ## 💻 Technologies Used:
 
 ### - Drizzle ORM
