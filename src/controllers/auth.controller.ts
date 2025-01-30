@@ -1,8 +1,8 @@
 import { Request, Response } from "express";
-import { db } from "../libs/db.js";
-import { user } from "../schema.js";
+import { db } from "../libs/db.ts";
+import { user } from "../schema.ts";
 import { eq } from "drizzle-orm";
-import handleError from "../libs/handleError.js";
+import handleError from "../libs/handleError.ts";
 import dotenv from "dotenv";
 import axios, { AxiosError } from "axios";
 
