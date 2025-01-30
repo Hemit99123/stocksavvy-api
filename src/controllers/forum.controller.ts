@@ -54,6 +54,9 @@ const forumController = {
                 // Match by both email and id, this way only the owner can delete a question
                 .where(eq(forum.email, email as string) && eq(forum.id, id)); 
             
+            res.status(200).json({
+                message: "Deleted your document successfully"
+            })
             
         } catch(error) {
             if (error instanceof Error) {
