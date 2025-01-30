@@ -29,7 +29,9 @@
     "express-session": "^1.18.0",
     "fs": "^0.0.1-security",
     "ioredis": "^5.4.1",
+    "jiti": "^2.4.2",
     "nodemailer": "^6.9.14",
+    "pg": "^8.13.1",
     "prettier": "^3.4.2",
     "swagger-jsdoc": "^6.2.8",
     "swagger-ui-express": "^5.0.1"
