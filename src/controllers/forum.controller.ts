@@ -2,7 +2,7 @@ import { Request, Response } from "express";
 import handleError from "../utils/handleError.js";
 import { forum } from "../schema.js";
 import { db } from "../utils/db.js";
-import { and, eq } from "drizzle-orm";
+import { eq } from "drizzle-orm";
 
 const forumController = {
     create: async (req: Request, res: Response) => {
