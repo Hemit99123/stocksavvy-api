@@ -6,7 +6,7 @@
   "scripts": {
     "dev": "tsc && node dist/src/server.js",
     "start": "node dist/src/server.js",
-    "build": "tsc",
+    "build": "tsc --outDir build",
     "generate": "drizzle-kit generate",
     "migrate": "drizzle-kit migrate",
     "prepare": "husky install",
