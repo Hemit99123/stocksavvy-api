@@ -5,5 +5,6 @@ import { authenticateSession } from "../middleware/session.middleware.js";
 const router = express.Router();
 
 router.post("/create", authenticateSession, forumController.create)
+router.delete("/delete", authenticateSession, forumController.delete)
 
 export default router;
