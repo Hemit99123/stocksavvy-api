@@ -19,7 +19,7 @@ const router = express.Router();
  *                email:
  *                  type: string
  *                  format: email
- *                  example: user@dailysat.com
+ *                  example: user@stocksavvy.com
  *                password:
  *                  type: string
  *                  example: supersecretpassword123
@@ -97,7 +97,7 @@ const router = express.Router();
  *                email:
  *                  type: string
  *                  format: email
- *                  example: user@dailysat.com
+ *                  example: user@stocksavvy.com
  *      responses:
  *        200:
  *          description: User deleted successfully
