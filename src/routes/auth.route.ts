@@ -6,7 +6,7 @@ const router = express.Router();
 /**
  * @swagger
  *  /auth/login:
- *    post:
+ *    get:
  *      summary: Log in a user using email
  *      tags: [authentication]
  *      requestBody:
@@ -84,7 +84,7 @@ const router = express.Router();
 /**
  * @swagger
  *  /auth/delete:
- *    post:
+ *    delete:
  *      summary: Delete a user account
  *      tags: [authentication]
  *      requestBody:
@@ -149,6 +149,7 @@ const router = express.Router();
 
 router.get("/login", authController.login);
 router.post("/logout", authController.logOut);
+router.delete("/delete", authController.deleteUser)
 router.get("/check-session", authController.checkSession);
 router.get("/error", authController.error);
 
