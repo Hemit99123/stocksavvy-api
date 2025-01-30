@@ -53,7 +53,8 @@ const forumController = {
                 .delete(forum)
                 // Match by both email and id, this way only the owner can delete a question
                 .where(eq(forum.email, email as string) && eq(forum.id, id)); 
-        
+            
+            
         } catch(error) {
             if (error instanceof Error) {
                 handleError(res, error);
@@ -64,7 +65,29 @@ const forumController = {
                 });
             }
         }
-    }
+    },
+
+    getAllQuestions: async (req: Request, res: Response) => {
+        try {
+            const questions = await db 
+                .select()
+                .from(forum)
+            
+            res.status(200).json({
+                questions
+            })
+
+        } catch(error) {
+            if (error instanceof Error) {
+                handleError(res, error);
+            } else {
+                res.status(500).json({
+                    message: "An unexpected error occurred",
+                    error: "unknown-error",
+                });
+            }
+        }
+    },
 };
 
 export default forumController;
