@@ -16,6 +16,7 @@ const app = express();
 // Routers
 import indexRoutes from "./routes/index.route.js";
 import authRoutes from "./routes/auth.route.js";
+import forumController from "./routes/forum.route.js";
 
 // JSON middleware
 app.use(express.json());
