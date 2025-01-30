@@ -1,4 +1,4 @@
-name: Build TypeScript
+name: Run Tests
 
 on:
   push:
@@ -7,7 +7,7 @@ on:
   pull_request:
 
 jobs:
-  build:
+  test:
     runs-on: ubuntu-latest
 
     steps:
@@ -19,5 +19,8 @@ jobs:
         with:
           node-version: '16'  # Adjust to your Node.js version
 
-      - name: Compile TypeScript
-        run: npm run build  # Assumes you have a build script in package.json
+      - name: Install dependencies
+        run: npm install
+
+      - name: Run tests
+        run: npm test  # Assumes you have a test script in package.json
