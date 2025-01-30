@@ -3,7 +3,7 @@ import express from 'express';
 import * as authController from '../src/controllers/auth.controller.js'; // Importing all named exports
 import authRoutes from "../src/routes/auth.route.js";
 
-jest.mock('../src/controllers/auth.controller.js'); // Mocking the controller
+jest.mock('../src/controllers/auth.controller.ts'); // Mocking the controller
 
 const app = express();
 app.use(express.json());

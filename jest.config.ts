@@ -1,9 +1,4 @@
 module.exports = {
-    preset: 'ts-jest',
-    testEnvironment: 'node',
-    transform: {
-      '^.+\\.tsx?$': 'ts-jest',
-    },
-    moduleFileExtensions: ['ts', 'js', 'json'],
-  };
-  
+  preset: 'ts-jest',
+  testEnvironment: 'node',
+};
