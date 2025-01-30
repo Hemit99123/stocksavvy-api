@@ -27,7 +27,7 @@ const router = express.Router();
  *                   example: December 24 2024
  *                 message:
  *                   type: string
- *                   example:The backend that powers the StockSavvy educational platform
+ *                   example: The backend that powers the StockSavvy educational platform
  */
 
 router.get("/", authenticateSession, indexController.get);
