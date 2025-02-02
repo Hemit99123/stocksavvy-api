@@ -3,7 +3,6 @@ import { db } from "../utils/db.js";
 import { user } from "../schema.js";
 import { eq } from "drizzle-orm";
 import handleError from "../utils/handleError.js";
-import axios, { AxiosError } from "axios";
 import { OAuth2Client } from "google-auth-library"; // Google's recommended method for token verification
 
 const client = new OAuth2Client();
@@ -83,16 +82,6 @@ const authController = {
           },
         });
       } catch (error: unknown) {
-        if (error instanceof AxiosError) {
-          if (error.response?.status === 401) {
-            return res.status(401).json({
-              message: "Invalid Google token (not authenticated)",
-              error: "invalid-token",
-            });
-          }
-        }
-  
-        console.error("Login error:", error);
         return res.status(500).json({
           message: "An error occurred during login",
           error: error instanceof Error ? error.message : "unknown-error",
