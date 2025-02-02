@@ -4,12 +4,12 @@ import { Response } from "express";
 
 const handleError = (res: Response, error: unknown) => {
   if (error instanceof Error) {
-    res.status(500).json({
+    return res.status(500).json({
       message: "Internal Server Error",
       error: error.message,
     });
   } else {
-    res.status(500).json({
+    return res.status(500).json({
       message: "Unknown Internal Server Error",
     });
   }

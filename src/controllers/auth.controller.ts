@@ -9,7 +9,7 @@ import { handleDestroySession } from "../utils/sessions.js";
 const client = new OAuth2Client();
 
 const authController = {
-  login: async (req: Request, res: Response) => {
+  loginGoogle: async (req: Request, res: Response) => {
     try {
       const { idToken } = req.body;
       if (!idToken) {
@@ -39,6 +39,14 @@ const authController = {
       res.json({ message: "Successfully logged in", name: userName, googleid: googleId });
     } catch (error) {
       handleError(res, error);
+    }
+  },
+
+  loginEmailMagic: async (req: Request, res: Response) => {
+    try {
+      
+    } catch (error) {
+      handleError(res,error)
     }
   },
 
