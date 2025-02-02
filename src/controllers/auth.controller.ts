@@ -93,12 +93,16 @@ const authController = {
     try {
       if (req.session) {
         req.session.destroy((err) => {
-          if (!err) {
-            res.json({
+          if (err) {
+            return res.json({
+              error:err
+            })
+          } else {
+            return res.json({
               message: "Logged out user"
             })
           }
-        });
+        })
       } else {
         return res.status(400).json({
           message: "User is not logged in and therefore cannot be logged out",

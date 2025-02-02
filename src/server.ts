@@ -6,6 +6,7 @@ import { redisClient } from "./utils/redis.js";
 import cors from "cors";
 import { RedisStore } from "connect-redis";
 import dotenv from "dotenv";
+import { v4 as uuidv4 } from "uuid";
 
 dotenv.config();
 
@@ -31,7 +32,6 @@ app.use(
     credentials: true,
   }),
 );
-app.options('*', cors()); // Allow preflight requests from any origin
 
 // Session middleware (config)
 app.use(
@@ -39,6 +39,7 @@ app.use(
     name: "session-id",
     secret: process.env.SESSION_SECRET || "default_secret", // Make sure to set this in your environment
     store: new RedisStore({ client: redisClient }),
+    genid: () => uuidv4(), // Use uuid to generate the session ID
     resave: false,
     saveUninitialized: false,
     cookie: {
@@ -46,7 +47,7 @@ app.use(
       secure: process.env.NODE_ENV === "production", // Set to true in production
       maxAge: 1000 * 60 * 60 * 24 * 365 * 7,
     },
-  }),
+  })
 );
 
 // Setup routing
