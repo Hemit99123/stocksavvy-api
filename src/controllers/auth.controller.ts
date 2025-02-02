@@ -139,6 +139,8 @@ const authController = {
       if (otpFromEmail == otp && continueLogin) {
         // assign the session
         req.session.user = {email}
+
+        // this deletes the otp right after its used (one-use)
         redisClient.del(email)
         res.json({ message: "Successfully logged in", name});
       } else {
