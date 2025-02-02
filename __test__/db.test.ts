@@ -41,10 +41,9 @@ describe("Database Tests", () => {
   describe("User Table", () => {
     test("should insert and retrieve a user", async () => {
       const mockUser = {
-        id: 1,
         email: "test@example.com",
         name: "Test User",
-        googleid: "12345"
+        type: "user" // Added type field
       };
 
       // Setup mock for insert
@@ -60,6 +59,7 @@ describe("Database Tests", () => {
         .values({
           email: mockUser.email,
           name: mockUser.name,
+          type: mockUser.type
         })
         .returning();
 
@@ -84,10 +84,10 @@ describe("Database Tests", () => {
   describe("Forum Table", () => {
     test("should insert and retrieve a forum question", async () => {
       const mockForumPost = {
-        id: 1,
+        id: 1, // id is now auto-incremented
         question: "What is the best programming language?",
-        email: "test@example.com",
-        createdAt: "2025-02-01"
+        email: "test@example.com", // email is now a foreign key
+        createdAt: "2025-02-01" // Use a string instead of a Date object
       };
 
       // Setup mock for insert
@@ -103,7 +103,7 @@ describe("Database Tests", () => {
         .values({
           question: mockForumPost.question,
           email: mockForumPost.email,
-          createdAt: mockForumPost.createdAt
+          createdAt: mockForumPost.createdAt // Pass the date as a string
         })
         .returning();
 
