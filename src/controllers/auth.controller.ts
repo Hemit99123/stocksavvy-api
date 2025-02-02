@@ -140,8 +140,13 @@ const authController = {
         req.session.user = {email}
         res.json({ message: "Successfully logged in", name});
       } else {
-        throw new Error("Not a valid otp or this email in-use by Google provider")
-      }
+        throw new Error(
+          otpFromEmail !== otp 
+            ? "Invalid OTP" 
+            : !continueLogin 
+              ? "This email is in-use by the google provider" 
+              : "An unexpected error occurred"
+        );      }
     } catch (error) {
       handleError(res,error)
     }
