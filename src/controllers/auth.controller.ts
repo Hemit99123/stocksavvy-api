@@ -11,6 +11,11 @@ import { transporter } from "../utils/nodemailer.js";
 
 const client = new OAuth2Client();
 
+// This ensures a uniform keyname for all the times we access otp redis keys
+const redisKeyName = (email: string) => {
+  return `otp:${email}`
+}
+
 const authController = {
   loginGoogle: async (req: Request, res: Response) => {
     try {
@@ -51,7 +56,7 @@ const authController = {
       const { email } = req.body;
       const random4DigitNumber = Math.floor(1000 + Math.random() * 9000);
 
-      await redisClient.set(email, random4DigitNumber, 'EX', 180)
+      await redisClient.set(redisKeyName(email), random4DigitNumber, 'EX', 180)
 
       const mailOptions = {
         to: email,
@@ -134,14 +139,14 @@ const authController = {
 
       const continueLogin = await findUserOrAdd(email, name, "email")
 
-      const otpFromEmail = await redisClient.get(email)
+      const otpFromEmail = await redisClient.get(redisKeyName(email))
 
       if (otpFromEmail == otp && continueLogin) {
         // assign the session
         req.session.user = {email}
 
         // this deletes the otp right after its used (one-use)
-        redisClient.del(email)
+        redisClient.del(redisKeyName(email))
         res.json({ message: "Successfully logged in", name});
       } else {
         throw new Error(
