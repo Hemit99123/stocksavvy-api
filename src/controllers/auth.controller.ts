@@ -189,13 +189,19 @@ const authController = {
 
   checkSession: (req: Request, res: Response) => {
     try {
-      const user = req.session.user
-
-      res.json({ status: user ? true: false });
+      res.json({ status: req.session.user ? true: false });
     } catch (error) {
       handleError(res, error);
     }
   },
+
+  getInfoSession: (req: Request, res: Response) => {
+    try {
+      res.json({session: req.session.user})
+    } catch (error) {
+      handleError(res, error)
+    }
+  }
 };
 
 export default authController;
