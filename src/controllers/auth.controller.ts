@@ -192,7 +192,7 @@ const authController = {
       if (req.session?.user) {
         return res.json({ success: true, session: req.session.user });
       }
-      res.status(400).json({ success: false, session: "none" });
+      res.json({ success: false, session: "none" });
     } catch (error) {
       handleError(res, error);
     }
