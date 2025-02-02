@@ -4,7 +4,7 @@
   "main": "index.js",
   "type": "module",
   "scripts": {
-    "dev": "tsc && node dist/src/server.js",
+    "dev": "tsc && NODE_TLS_REJECT_UNAUTHORIZED='0' node dist/src/server.js",
     "start": "node dist/src/server.js",
     "build": "tsc --noEmit",
     "generate": "drizzle-kit generate",
@@ -28,6 +28,7 @@
     "express": "^4.19.2",
     "express-session": "^1.18.0",
     "fs": "^0.0.1-security",
+    "google-auth-library": "^9.15.1",
     "ioredis": "^5.4.1",
     "jiti": "^2.4.2",
     "nodemailer": "^6.9.14",

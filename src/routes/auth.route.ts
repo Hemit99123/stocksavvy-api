@@ -147,7 +147,7 @@ const router = express.Router();
  *          description: User is NOT authenticated
  */
 
-router.get("/login", authController.login);
+router.post("/login", authController.login);
 router.post("/logout", authController.logOut);
 router.delete("/delete", authController.deleteUser)
 router.get("/check-session", authController.checkSession);

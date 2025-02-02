@@ -4,71 +4,100 @@ import { user } from "../schema.js";
 import { eq } from "drizzle-orm";
 import handleError from "../utils/handleError.js";
 import axios, { AxiosError } from "axios";
+import { OAuth2Client } from "google-auth-library"; // Google's recommended method for token verification
+
+const client = new OAuth2Client();
 
 const authController = {
-  login: async (req: Request, res: Response) => {
-    const { access_token } = req.query;
-
-    if (req.session.user) {
-      return res.status(200).json({
-        message: "You are already logged in, so no need to log in again!",
-        error: "already-authenticated",
-      });
-    }
-
-    try {
-      const response = await axios.get(
-        `https://www.googleapis.com/oauth2/v1/userinfo`,
-        {
-          headers: { Authorization: `Bearer ${access_token}` },
-        },
-      );
-
-      const userEmail = response.data.email;
-      const userObj = await db
-        .select()
-        .from(user)
-        .where(eq(user.email, userEmail))
-        .execute();
-
-      if (!userObj[0]) {
-        await db.insert(user).values({
-          email: userEmail,
-          name: response.data.name,
-          googleid: response.data.id,
+    login: async (req: Request, res: Response) => {
+      const { access_token } = req.body;
+  
+      if (!access_token) {
+        return res.status(400).json({
+          message: "Access token is required",
+          error: "missing-token",
         });
       }
-
-      req.session.user = { email: userEmail };
-
-      return res.json({
-        message: "Successfully logged into DailySAT Platforms",
-        user: {
-          email: userEmail,
-          name: response.data.name,
-          googleid: response.data.id,
-        },
-      });
-    } catch (error: unknown) {
-      if (error instanceof AxiosError) {
-        // Handling axios-specific error
-        if (error.response?.status === 401) {
-          return res.status(500).json({
-            message: "Invalid Google token (not authenticated 401)",
+  
+      if (req.session?.user) {
+        return res.status(200).json({
+          message: "You are already logged in, so no need to log in again!",
+          error: "already-authenticated",
+        });
+      }
+  
+      try {
+        // Use Google's recommended token verification method
+        const ticket = await client.verifyIdToken({
+          idToken: access_token,
+          audience: "349763756076-d3e7heso49g7guilorqri9k3n2u3krbm.apps.googleusercontent.com", // Ensure this is set in your environment
+        });
+  
+        const payload = ticket.getPayload();
+        if (!payload) {
+          throw new Error("Invalid token payload");
+        }
+  
+        const userEmail = payload.email;
+        const userName = payload.name || "Unknown";
+        const googleId = payload.sub;
+  
+        if (!userEmail) {
+          return res.status(400).json({
+            message: "Google token does not contain an email",
             error: "invalid-token",
           });
-        } else {
-          handleError(res, error);
         }
-      } else if (error instanceof Error) {
-        handleError(res, error);
-      } else {
-        res.status(500).json({
-          message: "An unknown error occurred.",
-          error: "unknown-error",
+  
+        // Check if user exists in the database
+        let userObj = await db
+          .select()
+          .from(user)
+          .where(eq(user.email, userEmail))
+          .execute();
+  
+        if (userObj.length === 0) {
+          // Insert new user
+          await db.insert(user).values({
+            email: userEmail,
+            name: userName,
+            googleid: googleId,
+          });
+  
+          // Re-fetch the user after insertion
+          userObj = await db
+            .select()
+            .from(user)
+            .where(eq(user.email, userEmail))
+            .execute();
+        }
+  
+        req.session.user = { email: userEmail };
+  
+        return res.json({
+          message: "Successfully logged into DailySAT Platforms",
+          user: {
+            email: userEmail,
+            name: userName,
+            googleid: googleId,
+          },
+        });
+      } catch (error: unknown) {
+        if (error instanceof AxiosError) {
+          if (error.response?.status === 401) {
+            return res.status(401).json({
+              message: "Invalid Google token (not authenticated)",
+              error: "invalid-token",
+            });
+          }
+        }
+  
+        console.error("Login error:", error);
+        return res.status(500).json({
+          message: "An error occurred during login",
+          error: error instanceof Error ? error.message : "unknown-error",
         });
       }
-    }
   },
 
   logOut: (req: Request, res: Response) => {
