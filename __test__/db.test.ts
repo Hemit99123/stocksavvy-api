@@ -60,7 +60,6 @@ describe("Database Tests", () => {
         .values({
           email: mockUser.email,
           name: mockUser.name,
-          googleid: mockUser.googleid
         })
         .returning();
 

@@ -4,7 +4,8 @@ import { user } from "../schema.js";
 import { eq } from "drizzle-orm";
 import handleError from "../utils/handleError.js";
 import { OAuth2Client } from "google-auth-library";
-import { handleDestroySession } from "../utils/sessions.js";
+import { handleDestroySession } from "../utils/auth/sessions.js";
+import { findUserOrAdd } from "../utils/auth/findUser.js";
 
 const client = new OAuth2Client();
 
@@ -27,16 +28,11 @@ const authController = {
 
       const userEmail = payload.email;
       const userName = payload.name || "Unknown";
-      const googleId = payload.sub;
 
-      let userObj = await db.select().from(user).where(eq(user.email, userEmail)).execute();
-      if (userObj.length === 0) {
-        await db.insert(user).values({ email: userEmail, name: userName, googleid: googleId });
-        userObj = await db.select().from(user).where(eq(user.email, userEmail)).execute();
-      }
+      findUserOrAdd(userEmail, userName)
 
       req.session.user = { email: userEmail };
-      res.json({ message: "Successfully logged in", name: userName, googleid: googleId });
+      res.json({ message: "Successfully logged in", name: userName});
     } catch (error) {
       handleError(res, error);
     }
@@ -44,6 +40,9 @@ const authController = {
 
   loginEmailMagic: async (req: Request, res: Response) => {
     try {
+      const { email, name } = req.body;
+
+      findUserOrAdd(email, name)
       
     } catch (error) {
       handleError(res,error)
