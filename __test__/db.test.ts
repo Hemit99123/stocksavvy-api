@@ -81,7 +81,51 @@ describe("Database Tests", () => {
       expect(insertMock.returning).toHaveBeenCalled();
     });
   });
-  
+
+  describe("Forum Table", () => {
+    test("should insert and retrieve a forum question", async () => {
+      const mockForumPost = {
+        id: 1,
+        question: "What is the best programming language?",
+        email: "test@example.com",
+        createdAt: "2025-02-01"
+      };
+
+      // Setup mock for insert
+      const insertMock = createMockQueryBuilder([mockForumPost]);
+      (db.insert as jest.Mock).mockReturnValue(insertMock);
+
+      // Setup mock for select
+      const selectMock = createMockQueryBuilder([mockForumPost]);
+      (db.select as jest.Mock).mockReturnValue(selectMock);
+
+      // Perform insert
+      const [insertedForumPost] = await db.insert(schema.forum)
+        .values({
+          question: mockForumPost.question,
+          email: mockForumPost.email,
+          createdAt: mockForumPost.createdAt
+        })
+        .returning();
+
+      expect(insertedForumPost).toEqual(mockForumPost);
+
+      // Perform select
+      const forumPosts = await db
+        .select()
+        .from(schema.forum)
+        .where(eq(schema.forum.email, mockForumPost.email));
+
+      expect(forumPosts).toHaveLength(1);
+      expect(forumPosts[0]).toEqual(mockForumPost);
+
+      // Verify mocks were called
+      expect(db.insert).toHaveBeenCalled();
+      expect(insertMock.values).toHaveBeenCalled();
+      expect(insertMock.returning).toHaveBeenCalled();
+    });
+  });
+
   afterAll(() => {
     jest.resetModules();
   });
