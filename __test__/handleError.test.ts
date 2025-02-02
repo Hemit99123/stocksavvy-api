@@ -1,5 +1,5 @@
 import { Response } from "express";
-import handleError from "../src/utils/handleError";  // Replace with the correct path
+import handleError from "../src/utils/error/handleError";  // Replace with the correct path
 
 // Mock Response object from Express
 const mockResponse = (): Response => {
@@ -31,7 +31,7 @@ describe("handleError", () => {
 
     expect(res.status).toHaveBeenCalledWith(500); // Check if status 500 was set
     expect(res.json).toHaveBeenCalledWith({
-      message: "Internal Server Error",
+      message: "Unknown Internal Server Error",
     });
   });
 });

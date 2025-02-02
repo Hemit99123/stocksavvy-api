@@ -22,6 +22,20 @@
       "when": 1738464142264,
       "tag": "0002_hesitant_jackal",
       "breakpoints": true
+    },
+    {
+      "idx": 3,
+      "version": "7",
+      "when": 1738517606761,
+      "tag": "0003_flaky_zeigeist",
+      "breakpoints": true
+    },
+    {
+      "idx": 4,
+      "version": "7",
+      "when": 1738519078987,
+      "tag": "0004_solid_luminals",
+      "breakpoints": true
     }
   ]
 }

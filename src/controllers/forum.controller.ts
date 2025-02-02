@@ -1,7 +1,7 @@
 import { Request, Response } from "express";
-import handleError from "../utils/handleError.js";
+import handleError from "../utils/error/handleError.js";
 import { forum } from "../schema.js";
-import { db } from "../utils/db.js";
+import { db } from "../utils/db/index.js";
 import { eq } from "drizzle-orm";
 
 const forumController = {
