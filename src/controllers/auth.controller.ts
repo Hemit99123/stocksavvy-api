@@ -29,7 +29,7 @@ const authController = {
         // Use Google's recommended token verification method
         const ticket = await client.verifyIdToken({
           idToken: access_token,
-          audience: "349763756076-d3e7heso49g7guilorqri9k3n2u3krbm.apps.googleusercontent.com", // Ensure this is set in your environment
+          audience: process.env.GOOGLE_CLIENT_ID, // Ensure this is set in your environment
         });
   
         const payload = ticket.getPayload();
