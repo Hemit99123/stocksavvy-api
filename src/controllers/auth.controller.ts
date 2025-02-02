@@ -4,6 +4,7 @@ import { user } from "../schema.js";
 import { eq } from "drizzle-orm";
 import handleError from "../utils/handleError.js";
 import { OAuth2Client } from "google-auth-library";
+import { Session, SessionData } from "express-session";
 
 const client = new OAuth2Client();
 
@@ -45,10 +46,18 @@ const authController = {
     if (!req.session?.user) {
       return res.status(400).json({ message: "Not logged in", error: "not-authenticated" });
     }
+    
+    // destroy the redis session
     req.session.destroy((err) => {
       if (err) return res.status(500).json({ message: "Logout failed", error: err.message });
-      res.json({ message: "Logged out successfully" });
+      
+      // clear the session id cookie on the frontend
+      res.clearCookie('session-id', { path: '/' });
+      return res.json({ message: "Logged out successfully" });
+
     });
+
+
   },
 
   deleteUser: async (req: Request, res: Response) => {
