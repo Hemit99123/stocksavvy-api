@@ -31,6 +31,7 @@ const authController = {
       const userEmail = payload.email;
       const userName = payload.name || "Unknown";
 
+      // this returns a true/false based on the type given, if it is the same as user obj we can continue!
       const continueLogin = await findUserOrAdd(userEmail, userName, "google")
 
       if (continueLogin) {
