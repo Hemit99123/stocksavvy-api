@@ -189,10 +189,9 @@ const authController = {
 
   checkSession: (req: Request, res: Response) => {
     try {
-      if (req.session?.user) {
-        return res.json({ success: true, session: req.session.user });
-      }
-      res.json({ success: false, session: "none" });
+      const user = req.session.user
+
+      res.json({ status: user ? true: false });
     } catch (error) {
       handleError(res, error);
     }
