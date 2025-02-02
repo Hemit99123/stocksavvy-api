@@ -148,7 +148,7 @@ const router = express.Router();
  */
 
 router.post("/login", authController.login);
-router.post("/logout", authController.logOut);
+router.post("/logout", authController.logout);
 router.delete("/delete", authController.deleteUser)
 router.get("/check-session", authController.checkSession);
 router.get("/error", authController.error);

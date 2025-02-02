@@ -89,7 +89,7 @@ const authController = {
       }
   },
 
-  logOut: (req: Request, res: Response) => {
+  logout: (req: Request, res: Response) => {
     try {
       if (req.session) {
         req.session.destroy((err) => {
