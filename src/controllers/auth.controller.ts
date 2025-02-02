@@ -11,15 +11,15 @@ const client = new OAuth2Client();
 const authController = {
   login: async (req: Request, res: Response) => {
     try {
-      const { id_token } = req.body;
-      if (!id_token) {
+      const { idToken } = req.body;
+      if (!idToken) {
         return res.status(400).json({ message: "Access token is required", error: "missing-token" });
       }
       if (req.session?.user) {
         return res.status(200).json({ message: "Already logged in!", error: "already-authenticated" });
       }
 
-      const ticket = await client.verifyIdToken({ idToken: id_token, audience: process.env.GOOGLE_CLIENT_ID });
+      const ticket = await client.verifyIdToken({ idToken: idToken, audience: process.env.GOOGLE_CLIENT_ID });
       const payload = ticket.getPayload();
       if (!payload || !payload.email) {
         return res.status(400).json({ message: "Invalid Google token", error: "invalid-token" });
