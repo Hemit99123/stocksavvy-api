@@ -29,14 +29,7 @@ const forumController = {
                 message: "Forum question created successfully",
             });
         } catch (error: unknown) {
-            if (error instanceof Error) {
-                handleError(res, error);
-            } else {
-                res.status(500).json({
-                    message: "An unexpected error occurred",
-                    error: "unknown-error",
-                });
-            }
+            handleError(res,error)
         }
     },
 
@@ -57,14 +50,7 @@ const forumController = {
             })
             
         } catch(error) {
-            if (error instanceof Error) {
-                handleError(res, error);
-            } else {
-                res.status(500).json({
-                    message: "An unexpected error occurred",
-                    error: "unknown-error",
-                });
-            }
+            handleError(res,error)
         }
     },
 
@@ -79,14 +65,7 @@ const forumController = {
             })
 
         } catch(error: unknown) {
-            if (error instanceof Error) {
-                handleError(res, error);
-            } else {
-                res.status(500).json({
-                    message: "An unexpected error occurred",
-                    error: "unknown-error",
-                });
-            }
+            handleError(res,error)
         }
     },
 
@@ -104,14 +83,7 @@ const forumController = {
                 message: "Got all questions for user"
             })
         } catch(error: unknown) {
-            if (error instanceof Error) {
-                handleError(res, error);
-            } else {
-                res.status(500).json({
-                    message: "An unexpected error occurred",
-                    error: "unknown-error",
-                });
-            }
+            handleError(res,error)
         }
     }
 };
