@@ -31,6 +31,7 @@ app.use(
     credentials: true,
   }),
 );
+app.options('*', cors()); // Allow preflight requests from any origin
 
 // Session middleware (config)
 app.use(

@@ -94,11 +94,9 @@ const authController = {
       if (req.session) {
         req.session.destroy((err) => {
           if (!err) {
-            res.redirect("/auth/success");
-          } else {
-            res.redirect(
-              '/auth/error?error="Authentication Error from Express Session',
-            );
+            res.json({
+              message: "Logged out user"
+            })
           }
         });
       } else {
