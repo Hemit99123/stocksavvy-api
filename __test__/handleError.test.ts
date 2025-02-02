@@ -1,5 +1,5 @@
 import { Response } from "express";
-import handleError from "../src/utils/handleError";  // Replace with the correct path
+import handleError from "../src/utils/error/handleError";  // Replace with the correct path
 
 // Mock Response object from Express
 const mockResponse = (): Response => {
