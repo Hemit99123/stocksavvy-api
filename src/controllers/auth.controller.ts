@@ -146,7 +146,8 @@ const authController = {
             : !continueLogin 
               ? "This email is in-use by the google provider" 
               : "An unexpected error occurred"
-        );      }
+        );      
+      }
     } catch (error) {
       handleError(res,error)
     }
