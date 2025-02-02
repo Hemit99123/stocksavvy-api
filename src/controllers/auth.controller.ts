@@ -74,11 +74,9 @@ const authController = {
         req.session.user = { email: userEmail };
   
         return res.json({
-          message: "Successfully logged into DailySAT Platforms",
-          user: {
-            email: userEmail,
-            name: userName,
-            googleid: googleId,
+          message: "Successfully logged into StockSavvy",
+          name: userName,
+          googleid: googleId,
           },
         });
       } catch (error: unknown) {
