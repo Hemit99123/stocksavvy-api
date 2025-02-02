@@ -1,6 +1,6 @@
 import express from "express";
 import swaggerUi from "swagger-ui-express";
-import swaggerSpecs from "./utils/swaggerConfig.js";
+import swaggerSpecs from "./utils/docs/swaggerConfig.js";
 import session from "express-session";
 import { redisClient } from "./utils/auth/redis.js";
 import cors from "cors";

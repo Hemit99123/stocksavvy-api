@@ -1,13 +1,13 @@
 import { Request, Response } from "express";
-import { db } from "../utils/db.js";
+import { db } from "../utils/db/index.js";
 import { user } from "../schema.js";
 import { eq } from "drizzle-orm";
-import handleError from "../utils/handleError.js";
+import handleError from "../utils/error/handleError.js";
 import { OAuth2Client } from "google-auth-library";
 import { handleDestroySession } from "../utils/auth/sessions.js";
 import { findUserOrAdd } from "../utils/auth/findUser.js";
 import { redisClient } from "../utils/auth/redis.js";
-import { transporter } from "../utils/nodemailer.js";
+import { transporter } from "../utils/nodemailer/index.js";
 
 const client = new OAuth2Client();
 
