@@ -31,7 +31,7 @@ describe("handleError", () => {
 
     expect(res.status).toHaveBeenCalledWith(500); // Check if status 500 was set
     expect(res.json).toHaveBeenCalledWith({
-      message: "Internal Server Error",
+      message: "Unknown Internal Server Error",
     });
   });
 });
