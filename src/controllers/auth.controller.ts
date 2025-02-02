@@ -88,12 +88,12 @@ const authController = {
               }
               .header h1 {
                 margin: 0;
-                color: #333;
+                color: #286A4D; /* Updated color */
               }
               .otp {
                 font-size: 24px;
                 font-weight: bold;
-                color: #2c7dfa;
+                color: #286A4D; /* Updated color */
                 text-align: center;
                 margin: 20px 0;
               }
@@ -108,11 +108,12 @@ const authController = {
           <body>
             <div class="email-container">
               <div class="header">
-                <h1>DailySAT Teachers</h1>
+                <h1>StockSavvy</h1>
               </div>
               <p>Hello,</p>
               <p>Use the following One-Time Password (OTP) to complete your verification process:</p>
               <div class="otp">${random4DigitNumber}</div>
+              <p>This OTP is only valid for 3 minutes.</p>
               <div class="footer">
                 <p>If you did not request this, please ignore this email.</p>
               </div>
