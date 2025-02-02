@@ -3,179 +3,77 @@ import { db } from "../utils/db.js";
 import { user } from "../schema.js";
 import { eq } from "drizzle-orm";
 import handleError from "../utils/handleError.js";
-import { OAuth2Client } from "google-auth-library"; // Google's recommended method for token verification
+import { OAuth2Client } from "google-auth-library";
 
 const client = new OAuth2Client();
 
 const authController = {
-    login: async (req: Request, res: Response) => {
-      const { access_token } = req.body;
-  
-      if (!access_token) {
-        return res.status(400).json({
-          message: "Access token is required",
-          error: "missing-token",
-        });
+  login: async (req: Request, res: Response) => {
+    try {
+      const { id_token } = req.body;
+      if (!id_token) {
+        return res.status(400).json({ message: "Access token is required", error: "missing-token" });
       }
-  
       if (req.session?.user) {
-        return res.status(200).json({
-          message: "You are already logged in, so no need to log in again!",
-          error: "already-authenticated",
-        });
+        return res.status(200).json({ message: "Already logged in!", error: "already-authenticated" });
       }
-  
-      try {
-        // Use Google's recommended token verification method
-        const ticket = await client.verifyIdToken({
-          idToken: access_token,
-          audience: process.env.GOOGLE_CLIENT_ID, // Ensure this is set in your environment
-        });
-  
-        const payload = ticket.getPayload();
-        if (!payload) {
-          throw new Error("Invalid token payload");
-        }
-  
-        const userEmail = payload.email;
-        const userName = payload.name || "Unknown";
-        const googleId = payload.sub;
-  
-        if (!userEmail) {
-          return res.status(400).json({
-            message: "Google token does not contain an email",
-            error: "invalid-token",
-          });
-        }
-  
-        // Check if user exists in the database
-        let userObj = await db
-          .select()
-          .from(user)
-          .where(eq(user.email, userEmail))
-          .execute();
-  
-        if (userObj.length === 0) {
-          // Insert new user
-          await db.insert(user).values({
-            email: userEmail,
-            name: userName,
-            googleid: googleId,
-          });
-  
-          // Re-fetch the user after insertion
-          userObj = await db
-            .select()
-            .from(user)
-            .where(eq(user.email, userEmail))
-            .execute();
-        }
-  
-        req.session.user = { email: userEmail };
-  
-        return res.json({
-          message: "Successfully logged into StockSavvy",
-          name: userName,
-          googleid: googleId,
-          },
-        });
-      } catch (error: unknown) {
-        return res.status(500).json({
-          message: "An error occurred during login",
-          error: error instanceof Error ? error.message : "unknown-error",
-        });
+
+      const ticket = await client.verifyIdToken({ idToken: id_token, audience: process.env.GOOGLE_CLIENT_ID });
+      const payload = ticket.getPayload();
+      if (!payload || !payload.email) {
+        return res.status(400).json({ message: "Invalid Google token", error: "invalid-token" });
       }
+
+      const userEmail = payload.email;
+      const userName = payload.name || "Unknown";
+      const googleId = payload.sub;
+
+      let userObj = await db.select().from(user).where(eq(user.email, userEmail)).execute();
+      if (userObj.length === 0) {
+        await db.insert(user).values({ email: userEmail, name: userName, googleid: googleId });
+        userObj = await db.select().from(user).where(eq(user.email, userEmail)).execute();
+      }
+
+      req.session.user = { email: userEmail };
+      res.json({ message: "Successfully logged in", name: userName, googleid: googleId });
+    } catch (error) {
+      handleError(res, error);
+    }
   },
 
   logout: (req: Request, res: Response) => {
-    try {
-      if (req.session) {
-        req.session.destroy((err) => {
-          if (err) {
-            return res.json({
-              error:err
-            })
-          } else {
-            return res.json({
-              message: "Logged out user"
-            })
-          }
-        })
-      } else {
-        return res.status(400).json({
-          message: "User is not logged in and therefore cannot be logged out",
-          error: "not-authenticated",
-        });
-      }
-    } catch (error: unknown) {
-      if (error instanceof Error) {
-        handleError(res, error);
-      } else {
-        res.status(500).json({
-          message: "An unexpected error occurred",
-          error: "unknown-error",
-        });
-      }
+    if (!req.session?.user) {
+      return res.status(400).json({ message: "Not logged in", error: "not-authenticated" });
     }
+    req.session.destroy((err) => {
+      if (err) return res.status(500).json({ message: "Logout failed", error: err.message });
+      res.json({ message: "Logged out successfully" });
+    });
   },
 
   deleteUser: async (req: Request, res: Response) => {
-    const { email } = req.session.user ?? {};
-
     try {
-      await db
-        .delete(user)
-        .where(eq(user.email, email as string))
-        .execute();
-
-      res.status(200).json({
-        message: "User deleted successfully",
-      });
-    } catch (error: unknown) {
-      if (error instanceof Error) {
-        handleError(res, error);
-      } else {
-        res.status(500).json({
-          message: "An unexpected error occurred",
-          error: "unknown-error",
-        });
+      const { email } = req.session.user ?? {};
+      if (!email) {
+        return res.status(400).json({ message: "No user in session", error: "not-authenticated" });
       }
+      await db.delete(user).where(eq(user.email, email)).execute();
+      req.session.destroy(() => {});
+      res.json({ message: "User deleted successfully" });
+    } catch (error) {
+      handleError(res, error);
     }
   },
 
-  checkSession: async (req: Request, res: Response) => {
-    try {
-      if (req.session) {
-        return res.status(200).json({
-          success: true,
-          session: req.user,
-        });
-      } else {
-        return res.status(400).json({
-          success: false,
-          session: "none",
-        });
-      }
-    } catch (error: unknown) {
-      if (error instanceof Error) {
-        handleError(res, error);
-      } else {
-        res.status(500).json({
-          message: "An unexpected error occurred",
-          error: "unknown-error",
-        });
-      }
+  checkSession: (req: Request, res: Response) => {
+    if (req.session?.user) {
+      return res.json({ success: true, session: req.session.user });
     }
+    res.status(400).json({ success: false, session: "none" });
   },
 
-  error: async (req: Request, res: Response) => {
-    const { error } = req.query;
-
-    res.json({
-      message:
-        "An error has occurred! Please contact DailySAT executive team to get this sorted right away!",
-      error: error,
-    });
+  error: (req: Request, res: Response) => {
+    res.json({ message: "An error occurred. Contact support.", error: req.query.error || "unknown" });
   },
 };
 
