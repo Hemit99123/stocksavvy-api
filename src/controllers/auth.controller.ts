@@ -51,7 +51,7 @@ const authController = {
       const { email } = req.body;
       const random4DigitNumber = Math.floor(1000 + Math.random() * 9000);
 
-      await redisClient.set(email, random4DigitNumber)
+      await redisClient.set(email, random4DigitNumber, 'EX', 180)
 
       const mailOptions = {
         to: email,
@@ -139,6 +139,7 @@ const authController = {
       if (otpFromEmail == otp && continueLogin) {
         // assign the session
         req.session.user = {email}
+        redisClient.del(email)
         res.json({ message: "Successfully logged in", name});
       } else {
         throw new Error(
