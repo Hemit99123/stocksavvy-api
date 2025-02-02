@@ -58,6 +58,8 @@ const authController = {
         return res.status(400).json({ message: "No user in session", error: "not-authenticated" });
       }
       await db.delete(user).where(eq(user.email, email)).execute();
+
+      // delete the session 
       req.session.destroy(() => {});
       res.json({ message: "User deleted successfully" });
     } catch (error) {
