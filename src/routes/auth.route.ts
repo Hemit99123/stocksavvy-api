@@ -153,6 +153,5 @@ router.post("/login/assign-otp", authController.assignOtp)
 router.get("/logout", authController.logout);
 router.delete("/delete", authController.deleteUser)
 router.get("/check-session", authController.checkSession);
-router.get("/error", authController.error);
 
 export default router;

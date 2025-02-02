@@ -188,14 +188,6 @@ const authController = {
       handleError(res, error);
     }
   },
-
-  error: (req: Request, res: Response) => {
-    try {
-      res.json({ message: "An error occurred. Contact support.", error: req.query.error || "unknown" });
-    } catch (error) {
-      handleError(res, error);
-    }
-  },
 };
 
 export default authController;
