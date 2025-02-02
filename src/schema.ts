@@ -3,6 +3,7 @@ import { text, pgTable, date, serial } from "drizzle-orm/pg-core";
 export const user = pgTable("user", {
   email: text("email").primaryKey(),
   name: text("name").notNull(),
+  type: text("type").notNull(),
 });
 
 export const forum = pgTable("forum", {
