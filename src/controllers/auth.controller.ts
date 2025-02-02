@@ -43,12 +43,14 @@ const authController = {
   },
 
   logout: (req: Request, res: Response) => {
-    if (!req.session?.user) {
-      return res.status(400).json({ message: "Not logged in", error: "not-authenticated" });
+    try {
+      if (!req.session?.user) {
+        return res.status(400).json({ message: "Not logged in", error: "not-authenticated" });
+      }
+      handleDestroySession(req, res);
+    } catch (error) {
+      handleError(res, error);
     }
-    
-    // session is what keeps user logged in, w/o it user loses authenticated status
-    handleDestroySession(req, res)
   },
 
   deleteUser: async (req: Request, res: Response) => {
@@ -58,23 +60,29 @@ const authController = {
         return res.status(400).json({ message: "No user in session", error: "not-authenticated" });
       }
       await db.delete(user).where(eq(user.email, email)).execute();
-
-      handleDestroySession(req, res)
-
+      handleDestroySession(req, res);
     } catch (error) {
       handleError(res, error);
     }
   },
 
   checkSession: (req: Request, res: Response) => {
-    if (req.session?.user) {
-      return res.json({ success: true, session: req.session.user });
+    try {
+      if (req.session?.user) {
+        return res.json({ success: true, session: req.session.user });
+      }
+      res.status(400).json({ success: false, session: "none" });
+    } catch (error) {
+      handleError(res, error);
     }
-    res.status(400).json({ success: false, session: "none" });
   },
 
   error: (req: Request, res: Response) => {
-    res.json({ message: "An error occurred. Contact support.", error: req.query.error || "unknown" });
+    try {
+      res.json({ message: "An error occurred. Contact support.", error: req.query.error || "unknown" });
+    } catch (error) {
+      handleError(res, error);
+    }
   },
 };
 
