@@ -1,6 +1,6 @@
 import { eq } from "drizzle-orm";
 import { user } from "../../schema.js";
-import { db } from "../db.js";
+import { db } from "../db/index.js";
 
 export const findUserOrAdd = async (userEmail: string, userName: string, type: "google" | "email") => {
     // Fetch the user from the database
