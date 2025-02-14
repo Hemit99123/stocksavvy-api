@@ -43,7 +43,7 @@ const authController = {
         req.session.user = { email: userEmail };
         res.json({ message: "Successfully logged in", name: userName});
       } else {
-        res.json({messag: "This email is in-use by email provider", error: "no-login"})
+        res.json({message: "This email is in-use by email provider", error: "no-login"})
       }
 
     } catch (error) {
