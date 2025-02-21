@@ -14,3 +14,13 @@ export const forum = pgTable("forum", {
     .notNull(), 
   createdAt: date("createdAt")
 });
+
+export const questions = pgTable("questions", {
+  id: serial("id").primaryKey(),
+  question: text("question").notNull(),
+  optionA: text("option_a").notNull(),
+  optionB: text("option_b").notNull(),
+  optionC: text("option_c").notNull(),
+  optionD: text("option_d").notNull(),
+  correctAnswer: text("correct_answer").notNull() // this is type of correct answer
+})
